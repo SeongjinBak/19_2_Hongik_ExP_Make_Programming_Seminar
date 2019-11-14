@@ -14,6 +14,7 @@ public class Enemy1 : MovingObject1
     // Start is called before the first frame update
     protected override void Start()
     {
+        GameManager1.instance.AddEnemyToList(this);
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         base.Start();
@@ -60,6 +61,9 @@ public class Enemy1 : MovingObject1
     {
         //Declare hitPlayer and set it to equal the encountered component.
         Player1 hitPlayer = component as Player1;
+
+        animator.SetTrigger("enemyAttack");
+
 
         //Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
         hitPlayer.LoseFood(playerDamage);

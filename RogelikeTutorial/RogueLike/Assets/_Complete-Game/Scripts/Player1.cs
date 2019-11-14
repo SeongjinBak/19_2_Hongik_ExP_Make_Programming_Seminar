@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using UnityEngine.SceneManagement;
 
 public class Player1 : MovingObject1
 {
-
+    public Text foodText;
     public int wallDamage = 1;
     public int pointsPerFood = 10;
     public int pointsPerSoda = 20;
@@ -20,7 +21,7 @@ public class Player1 : MovingObject1
     {
         animator = GetComponent<Animator>();
         food = GameManager1.instance.playerFoodPoints;
-
+        foodText.text = "Food : " + food;
         base.Start();
     }
 
@@ -35,6 +36,8 @@ public class Player1 : MovingObject1
     {
         food--;
         base.AttemptMove<T>(xDir, yDir);
+        foodText.text = "Food : " + food;
+
         RaycastHit2D hit;
         CheckIfGameOver();
         GameManager1.instance.playersTurn = false;
@@ -71,6 +74,8 @@ public class Player1 : MovingObject1
     {
         animator.SetTrigger("playerHit");
         food -= loss;
+        foodText.text = "-" + loss + " Food : " + food;
+
         CheckIfGameOver();
     }
 
@@ -92,6 +97,9 @@ public class Player1 : MovingObject1
             //Add pointsPerFood to the players current food total.
             food += pointsPerFood;
 
+            foodText.text = "+" + pointsPerFood + " Food : " + food;
+
+
             //Disable the food object the player collided with.
             other.gameObject.SetActive(false);
         }
@@ -101,6 +109,9 @@ public class Player1 : MovingObject1
         {
             //Add pointsPerSoda to players food points total
             food += pointsPerSoda;
+
+            foodText.text = "+" + pointsPerSoda + " Food : " + food;
+
 
 
             //Disable the soda object the player collided with.
