@@ -16,6 +16,16 @@ public class Player1 : MovingObject1
 
     private int food;
 
+
+    public AudioClip moveSound1;
+    public AudioClip moveSound2;
+    public AudioClip eatSound1;
+    public AudioClip eatSound2;
+    public AudioClip drinkSound1;
+    public AudioClip drinkSound2;
+    public AudioClip gameOverSound;
+
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -39,6 +49,10 @@ public class Player1 : MovingObject1
         foodText.text = "Food : " + food;
 
         RaycastHit2D hit;
+        if(Move(xDir,yDir,out hit))
+        {
+            SoundManager1.instance.RandomizeSfx(moveSound1, moveSound2);
+        }
         CheckIfGameOver();
         GameManager1.instance.playersTurn = false;
     }
@@ -53,7 +67,12 @@ public class Player1 : MovingObject1
     private void CheckIfGameOver()
     {
         if (food <= 0)
+        {
             GameManager1.instance.GameOver();
+            SoundManager1.instance.PlaySingle(gameOverSound);
+            SoundManager1.instance.musicSource.Stop();
+        }
+            
     }
     protected override void OnCantMove<T>(T component)
     {
@@ -99,6 +118,7 @@ public class Player1 : MovingObject1
 
             foodText.text = "+" + pointsPerFood + " Food : " + food;
 
+            SoundManager1.instance.RandomizeSfx(eatSound1, eatSound2);
 
             //Disable the food object the player collided with.
             other.gameObject.SetActive(false);
@@ -112,7 +132,7 @@ public class Player1 : MovingObject1
 
             foodText.text = "+" + pointsPerSoda + " Food : " + food;
 
-
+            SoundManager1.instance.RandomizeSfx(drinkSound1, drinkSound2);
 
             //Disable the soda object the player collided with.
             other.gameObject.SetActive(false);

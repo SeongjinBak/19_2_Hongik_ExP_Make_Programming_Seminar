@@ -19,7 +19,7 @@ public class GameManager1 : MonoBehaviour
 
     public BoardManager1 boardScript;
 
-    public int level = 1;
+    public int level = 20;
 
     public int playerFoodPoints = 100;
 
